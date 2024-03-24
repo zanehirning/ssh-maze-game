@@ -9,15 +9,15 @@ import (
 type Cell struct {
     Row int
     Col int
-    leftNeighbor *Cell
-    rightNeighbor *Cell
-    topNeighbor *Cell
-    bottomNeighbor *Cell
+    LeftNeighbor *Cell
+    RightNeighbor *Cell
+    TopNeighbor *Cell
+    BottomNeighbor *Cell
     Visited bool
 }
 
 func (cell *Cell) hasConnection() bool {
-    return cell.leftNeighbor != nil || cell.rightNeighbor != nil || cell.topNeighbor != nil || cell.bottomNeighbor != nil
+    return cell.LeftNeighbor != nil || cell.RightNeighbor != nil || cell.TopNeighbor != nil || cell.BottomNeighbor != nil
 }
 
 func Maze(dim int) [][]*Cell {
@@ -34,16 +34,17 @@ func Maze(dim int) [][]*Cell {
                 Row: i,
                 Col: j,
                 Visited: false,
-                leftNeighbor: nil,
-                rightNeighbor: nil,
-                topNeighbor: nil,
-                bottomNeighbor: nil,
+                LeftNeighbor: nil,
+                RightNeighbor: nil,
+                TopNeighbor: nil,
+                BottomNeighbor: nil,
             }
-            maze[i][j] = c
+            maze[i][j] = nil
             cells[i][j] = c
         }
     }
     primsGeneration(maze, cells, frontier)
+    printMaze(maze)
     return maze
 }
 
@@ -80,6 +81,34 @@ func primsGeneration(maze [][]*Cell, cells [][]*Cell, frontier []*Cell) {
     }
 }
 
+func (c *Cell) String() string {
+    s := ""
+    if c.LeftNeighbor != nil {
+        s += "L"
+    }
+    if c.RightNeighbor != nil {
+        s += "R"
+    }
+    if c.TopNeighbor != nil {
+        s += "T"
+    }
+    if c.BottomNeighbor != nil {
+        s += "B"
+    }
+    s += ", "
+    return s
+}
+
+func printMaze(maze [][]*Cell) {
+    for i := 0; i < len(maze); i++ {
+        for j := 0; j < len(maze[0]); j++ {
+            cell := maze[i][j]
+            print(i, j, cell.String())
+        }
+        println()
+    }
+}
+
 func getCellsInMaze(maze [][]*Cell) []*Cell {
     var cells []*Cell
     for i := 0; i < len(maze); i++ {
@@ -96,19 +125,19 @@ func getCellsInMaze(maze [][]*Cell) []*Cell {
 func setNeighbors(cell *Cell, neighbor *Cell) {
     if cell.Row == neighbor.Row {
         if cell.Col < neighbor.Col {
-            cell.rightNeighbor = neighbor
-            neighbor.leftNeighbor = cell
+            cell.RightNeighbor = neighbor
+            neighbor.LeftNeighbor = cell
         } else {
-            cell.leftNeighbor = neighbor
-            neighbor.rightNeighbor = cell
+            cell.LeftNeighbor = neighbor
+            neighbor.RightNeighbor = cell
         }
     } else {
         if cell.Row < neighbor.Row {
-            cell.bottomNeighbor = neighbor
-            neighbor.topNeighbor = cell
+            cell.BottomNeighbor = neighbor
+            neighbor.TopNeighbor = cell
         } else {
-            cell.topNeighbor = neighbor
-            neighbor.bottomNeighbor = cell
+            cell.TopNeighbor = neighbor
+            neighbor.BottomNeighbor = cell
         }
     }
 }

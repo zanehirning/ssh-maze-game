@@ -34,13 +34,21 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
         case "q":
             return m, tea.Quit
         case "j", "down":
-            m.player.MoveDown()
+            if (m.player.Position.Y < len(m.maze) - 1 && m.maze[m.player.Position.X][m.player.Position.Y].BottomNeighbor != nil) {
+                m.player.MoveDown()
+            }  
         case "k", "up":
-            m.player.MoveUp()
+            if (m.player.Position.Y < 0 && m.maze[m.player.Position.X][m.player.Position.Y].TopNeighbor != nil) {
+                m.player.MoveUp()
+            }
         case "h", "left":
-            m.player.MoveLeft()
+            if (m.player.Position.X > 0 && m.maze[m.player.Position.X][m.player.Position.X].LeftNeighbor != nil) {
+                m.player.MoveLeft()
+            }  
         case "l", "right":
-            m.player.MoveRight()
+            if (m.player.Position.X < len(m.maze) - 1 && m.maze[m.player.Position.X][m.player.Position.Y].RightNeighbor != nil) {
+                m.player.MoveRight()
+            }
         case "enter":
             m.maze = maze.Maze(10);
             m.player.Position.X = 0
