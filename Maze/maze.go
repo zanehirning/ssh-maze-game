@@ -20,7 +20,7 @@ func (cell *Cell) hasConnection() bool {
     return cell.leftNeighbor != nil || cell.rightNeighbor != nil || cell.topNeighbor != nil || cell.bottomNeighbor != nil
 }
 
-func Maze(dim int) {
+func Maze(dim int) [][]*Cell {
     var maze [][]*Cell
     var frontier []*Cell
     var cells [][]*Cell
@@ -44,6 +44,7 @@ func Maze(dim int) {
         }
     }
     primsGeneration(maze, cells, frontier)
+    return maze
 }
 
 func primsGeneration(maze [][]*Cell, cells [][]*Cell, frontier []*Cell) {
