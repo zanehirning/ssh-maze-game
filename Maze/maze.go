@@ -131,5 +131,5 @@ func getNeighborsInMaze(cell *Cell, maze [][]*Cell) []*Cell {
 }
 
 func main() {
-    maze()
+    maze(10)
 }
