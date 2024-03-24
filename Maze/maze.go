@@ -1,8 +1,7 @@
-package main
+package maze
 
 import (
     "math/rand"
-    "fmt"
     "slices"
 )
 
@@ -21,7 +20,7 @@ func (cell *Cell) hasConnection() bool {
     return cell.leftNeighbor != nil || cell.rightNeighbor != nil || cell.topNeighbor != nil || cell.bottomNeighbor != nil
 }
 
-func maze(dim int) {
+func Maze(dim int) {
     var maze [][]*Cell
     var frontier []*Cell
     var cells [][]*Cell
@@ -130,6 +129,3 @@ func getNeighborsInMaze(cell *Cell, maze [][]*Cell) []*Cell {
     return neighbors
 }
 
-func main() {
-    maze(10)
-}
